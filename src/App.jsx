@@ -6,7 +6,10 @@ import { useEffect } from 'react';
 const App = () => {
   const [title, setTitle] = React.useState("");
   const [detailed, setDetailed] = React.useState("");
-  const [task, setTask] = React.useState([]);
+  const [task, setTask] = React.useState(()=>{
+    const notes = localStorage.getItem("notes")
+    return notes ? JSON.parse(notes):[]
+  });
   const submitHandler=(e)=>{
     e.preventDefault()
     const copyTask = [...task]
@@ -15,6 +18,9 @@ const App = () => {
     setTitle("")
     setDetailed("")
   }
+  React.useEffect(()=>{
+    localStorage.setItem("notes",JSON.stringify(task))
+  },[task])
   const [date, setDate] = React.useState("");
   const [day, setDay] = React.useState("");
   React.useEffect(()=>{
